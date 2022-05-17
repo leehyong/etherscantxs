@@ -1,6 +1,6 @@
 <template>
   <div>
-    <a-table :dataSource="dataSource" :columns="columns" :pagination="pagination" />
+    <a-table :dataSource="dataSource" rowKey="txHash" :columns="columns" :pagination="pagination" />
   </div>
 </template>
 
