@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "serve": "vue-cli-service serve",
+    "serve": "vue-cli-service serve --fix",
     "build": "vue-cli-service build",
     "lint": "eslint src api --ext .mjs,.js,.vue",
     "start": "npm-run-all --parallel start:*",
@@ -24,6 +24,7 @@
     "@ocap/client": "^1.16.4",
     "@ocap/mcrypto": "^1.16.4",
     "@ocap/wallet": "^1.16.4",
+    "ant-design-vue": "^1.7.8",
     "axios": "^0.27.2",
     "compression": "^1.7.4",
     "cookie-parser": "^1.4.6",

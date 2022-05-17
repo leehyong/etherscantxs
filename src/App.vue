@@ -1,7 +1,6 @@
 <template>
   <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png" />
-    <HelloWorld msg="Welcome to Your Vue.js App" />
+    <account-tx />
     <div :style="{ display: 'flex', justifyContent: 'center' }">
       <pre :style="{ textAlign: 'left' }">
 <code>{{ JSON.stringify(blocklet, null, 2) }}</code>
@@ -11,12 +10,12 @@
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue';
+import AccountTx from './components/tx';
 
 export default {
   name: 'App',
   components: {
-    HelloWorld,
+    AccountTx,
   },
   data() {
     return {

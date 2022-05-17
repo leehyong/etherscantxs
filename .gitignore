@@ -12,6 +12,8 @@ coverage
 # production
 build
 dist
+.idea
+yarn.lock
 dist-ssr
 .blocklet
 

@@ -8,12 +8,8 @@ group: dapp
 did: z8iZj7jcG2PWYEGr7GxKLEqmz6xt78cBq9vYa
 main: api/index.js
 author:
-  name: |-
-    blocklet config v1.7.16
-    undefined
-  email: |-
-    blocklet config v1.7.16
-    undefined
+  name: lihuayong
+  email: lxy1148545418@163.com
 repository:
   type: git
   url: git+https://github.com/blocklet/create-blocklet.git
