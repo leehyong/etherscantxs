@@ -27,3 +27,70 @@ describe('parseTotal', function () {
     });
   });
 });
+
+
+describe('getAddrTxs', function () {
+  describe('test', function () {
+    it('should return null when the text is not valid', function () {
+      const history = `
+      <tbody>
+      <tr>
+    <td><a role='button' tabindex='0' type='button'
+            class='js-txnAdditional-1 btn btn-xs btn-icon btn-soft-secondary myFnExpandBox'><i
+                class='far fa-eye btn-icon__inner'></i></a></td>
+    <td><span class='hash-tag text-truncate'><a
+                href='/tx/0xbf2b128cff5682386ff6124e8423208c5c48525f413902ead75c0f556e881763'
+                class='myFnExpandBox_searchVal'>0xbf2b128cff5682386ff6124e8423208c5c48525f413902ead75c0f556e881763</a></span>
+    </td>
+    <td><span style="min-width:68px;"
+            class="u-label u-label--xs u-label--info rounded text-dark text-center"
+            data-toggle="tooltip" data-boundary="viewport" data-html="true"
+            title="Multicall">Multicall</span></td>
+    <td class="d-none d-sm-table-cell"><a href='/block/14777116'>14777116</a></td>
+    <td class='showDate ' style='display:none !important; '><span rel='tooltip'
+            data-toggle='tooltip' data-placement='bottom'
+            title='2 days 11 hrs ago'>2022-05-15 1:33:13</span></td>
+    <td style='' class='showAge '><span rel='tooltip' data-toggle='tooltip'
+            data-placement='bottom' title='2022-05-15 1:33:13'>2 days 11 hrs
+            ago</span></td>
+    <td><span class='hash-tag text-truncate' data-toggle='tooltip'
+            data-boundary='viewport' data-html='true'
+            title='0xeb2a81e229b68c1c22b6683275c00945f9872d90'>0xeb2a81e229b68c1c22b6683275c00945f9872d90</span>
+    </td>
+    <td class='text-center'><span
+            class="u-label u-label--xs u-label--warning color-strong text-uppercase text-center w-100 rounded text-nowrap">OUT</span>
+    </td>
+    <td><span style='white-space: nowrap;'><i class="far fa-file-alt text-secondary"
+                data-toggle='tooltip' data-boundary='viewport' data-html='true'
+                title='Contract'></i> <a class='hash-tag text-truncate'
+                href='/address/0x68b3465833fb72a70ecdf485e0e4c7bd8665fc45'
+                data-toggle='tooltip' data-boundary='viewport' data-html='true'
+                title='Uniswap V3: Router 2&#10;(0x68b3465833fb72a70ecdf485e0e4c7bd8665fc45)'>Uniswap
+                V3: Router 2</a></td>
+    <td>0<b>.</b><span class='text-secondary'>75</span> Ether</td>
+    <td style='' class='showTxnFee'><span
+            class='small text-secondary'>0<b>.</b>00685354</span>
+        <font color='green'><i class='fad fa-lightbulb-dollar'
+                title='Type 2 - EIP 1559'></i></font>
+    </td>
+    <td style='display:none !important; ' class='showGasPrice'><span
+            class='small text-secondary'>23<b>.</b>007677003</span></td>
+</tr>
+</tbody>
+      `;
+      let data = util.getAddrTxs(history)
+      assert.equal(data.txs.length, 1);
+      assert.equal(data.total, 0);
+      let tx = data.txs[0];
+      assert.equal(tx._id, "0xbf2b128cff5682386ff6124e8423208c5c48525f413902ead75c0f556e881763");
+      assert.equal(tx.blockNumber, "14777116");
+      assert.equal(tx.time, "2022-05-15 1:33:13");
+      assert.equal(tx.from, "0xeb2a81e229b68c1c22b6683275c00945f9872d90");
+      assert.equal(tx.to, "Uniswap V3: Router 2\n(0x68b3465833fb72a70ecdf485e0e4c7bd8665fc45)");
+      assert.equal(tx.value, "0.75");
+      assert.equal(tx.fee, "0.00685354");
+    });
+  });
+});
+
+

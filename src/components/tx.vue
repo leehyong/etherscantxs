@@ -11,6 +11,7 @@
       rowKey="_id"
       :columns="columns"
       :pagination="pagination"
+      :showTotal="true"
       @change="tableChange" />
   </div>
 </template>
@@ -43,10 +44,8 @@ export default {
       }
       let p = this.p;
       let pageSize = this.pageSize;
-      logger.info(this.$data);
       let url = `/api/txs?a=${this.addr}&p=${p}&size=${pageSize}`;
       axios.get(url).then((res) => {
-        console.log(res);
         this.total = res.data.total;
         this.dataSource = res.data.txs;
       });
