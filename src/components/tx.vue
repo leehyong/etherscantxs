@@ -1,26 +1,55 @@
 <template>
   <div>
-    <a-table :dataSource="dataSource" rowKey="txHash" :columns="columns" :pagination="pagination" />
+    <div style="display: flex; margin-bottom: 10px">
+      <a-input-search style="flex: 80px" v-model="addr" placeholder="请输入地址"></a-input-search>
+      <a-button style="flex: 80px" @click="getAddrTxs">查询</a-button>
+      <div style="flex: 1"></div>
+    </div>
+    <a-table
+      ref="table"
+      :dataSource="dataSource"
+      rowKey="_id"
+      :columns="columns"
+      :pagination="pagination"
+      @change="tableChange" />
   </div>
 </template>
 
 <script>
 import axios from '../libs/api';
+const logger = console;
 
 export default {
   name: 'account-tx',
   data() {
     return {
-      user: '',
+      addr: '0xeb2a81e229b68c1c22b6683275c00945f9872d90',
       total: 0,
-      dataSource: [{ txHash: 1, blockNumber: 2 }],
+      p: 1,
+      pageSize: 50,
+      dataSource: [{ _id: 1, blockNumber: 2 }],
     };
   },
-  created() {
-    axios.get('/api/user').then((res) => {
-      console.log(res);
-      this.user = res;
-    });
+  methods: {
+    tableChange(pageNation) {
+      this.p = pageNation.page;
+      this.pageSize = pageNation.pageSize;
+      this.getAddrTxs();
+    },
+    getAddrTxs() {
+      if (!this.addr) {
+        logger.error('请先输入地址再查询');
+        return;
+      }
+      let p = this.p;
+      let pageSize = this.pageSize;
+      logger.info(this.$data);
+      let url = `/api/txs?a=${this.addr}&p=${p}&size=${pageSize}`;
+      axios.get(url).then((res) => {
+        console.log(res);
+        this.dataSource = res.data;
+      });
+    },
   },
   computed: {
     pagination() {
@@ -36,8 +65,8 @@ export default {
       return [
         {
           title: '交易Hash',
-          dataIndex: 'txHash',
-          key: 'txHash',
+          dataIndex: '_id',
+          key: '_id',
         },
         {
           title: '区块',
@@ -66,8 +95,8 @@ export default {
         },
         {
           title: 'TxFee',
-          dataIndex: 'txFee',
-          key: 'txFee',
+          dataIndex: 'fee',
+          key: 'fee',
         },
       ];
     },

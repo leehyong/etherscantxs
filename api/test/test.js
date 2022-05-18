@@ -12,3 +12,16 @@ describe('ValidEthAddr', function () {
     });
   });
 });
+
+describe('Value Integer Part', function () {
+  describe('test', function () {
+    it('should return null when the text is not valid', function () {
+      let okV = "0<b>";
+      assert.equal(util.getValueIntPart(okV), "0");
+      okV = "320<b>";
+      assert.equal(util.getValueIntPart(okV), "320");
+      const errV = "faf22<b>";
+      assert.equal(util.getValueIntPart(errV), null);
+    });
+  });
+});
