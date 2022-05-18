@@ -1,11 +1,6 @@
 <template>
   <div id="app">
     <account-tx />
-    <div :style="{ display: 'flex', justifyContent: 'center' }">
-      <pre :style="{ textAlign: 'left' }">
-<code>{{ JSON.stringify(blocklet, null, 2) }}</code>
-    </pre>
-    </div>
   </div>
 </template>
 
