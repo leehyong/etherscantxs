@@ -4,6 +4,9 @@ const util = require('../util')
 const logger = require('../libs/logger');
 const needle = require('needle')
 const https = require('https')
+const fs = require('fs')
+const path = require("path");
+
 
 const { Database } = require('@blocklet/sdk');
 
@@ -20,8 +23,19 @@ router.use('/txs', (req, res) => {
   // 只支持这些分页参数
   if ([10, 20, 30, 40, 50].indexOf(pageSize) === -1) pageSize = 50;
   let p = util.transferEtherScanIoPage(page, pageSize);
-  const url = `https://etherscan.io/txs?a=${addr}&p=${p}`
-  needle.post(url,
+  // const url = `https://etherscan.io/txs?a=${addr}&p=${p}`
+  const url = `/etherscantxs?a=${addr}&p=${p}`
+  let fp = path.join(__dirname, "test.txt")
+  logger.info(fp)
+  fs.readFile(fp, 'utf-8', (err, data)=>{
+    if (err){
+      logger.error(err);
+      res.sendStatus(400);
+      return
+    }
+    res.json(util.getAddrTxs(data));
+  })
+  /*needle.post(url,
     null,
     {
     rejectUnauthorized: false
@@ -33,13 +47,15 @@ router.use('/txs', (req, res) => {
     }
     if (_res.statusCode !== 200){
       logger.error(`请求${url}失败.错误码：${_res.statusCode}`);
-      logger.info(body);
+      logger.error(_res.headers);
+      logger.error(body);
       res.sendStatus(_res.statusCode);
       return
     }
     logger.info(body)
     res.json(util.getAddrTxs(body));
   });
+  */
 });
 
 

@@ -32,7 +32,7 @@ export default {
   },
   methods: {
     tableChange(pageNation) {
-      this.p = pageNation.page;
+      this.p = pageNation.current;
       this.pageSize = pageNation.pageSize;
       this.getAddrTxs();
     },
