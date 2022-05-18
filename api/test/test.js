@@ -94,3 +94,16 @@ describe('getAddrTxs', function () {
 });
 
 
+
+describe('transferEtherScanIoPage', function () {
+  describe('test', function () {
+    it('should return null when the text is not valid', function () {
+      assert.equal(util.transferEtherScanIoPage(1, 20), 1);
+      assert.equal(util.transferEtherScanIoPage(1, 50), 1);
+      assert.equal(util.transferEtherScanIoPage(2, 40), 2);
+      assert.equal(util.transferEtherScanIoPage(3, 40), 3);
+      assert.equal(util.transferEtherScanIoPage(4, 30), 3);
+      assert.equal(util.transferEtherScanIoPage(6, 20), 3);
+    });
+  });
+});

@@ -103,8 +103,12 @@ function getAddrTxs(text) {
 
 const etherScanIoPageSize = 50;
 
+
 function transferEtherScanIoPage(pageNo, pageSize){
-  return Math.floor((pageNo  * pageSize) / etherScanIoPageSize) + 1
+  let mul = pageNo  * pageSize;
+  let mod = mul % etherScanIoPageSize
+  let div = Math.floor((pageNo  * pageSize) / etherScanIoPageSize)
+  return mod === 0 ? div : div + 1
 }
 
 module.exports = {
