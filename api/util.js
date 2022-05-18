@@ -115,6 +115,7 @@ module.exports = {
   isValidEthAddr,
   getAddrTxs,
   parseTotal,
-  transferEtherScanIoPage
+  transferEtherScanIoPage,
+  etherScanIoPageSize
 };
 
