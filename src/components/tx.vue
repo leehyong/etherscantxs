@@ -47,7 +47,8 @@ export default {
       let url = `/api/txs?a=${this.addr}&p=${p}&size=${pageSize}`;
       axios.get(url).then((res) => {
         console.log(res);
-        this.dataSource = res.data;
+        this.total = res.data.total;
+        this.dataSource = res.data.txs;
       });
     },
   },

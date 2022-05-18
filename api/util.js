@@ -25,6 +25,15 @@ function parseHtml(html) {
   return cheerio.load(html, null, false);
 }
 
+const totalReg = /of\s*(.+)\s*transactions/
+function parseTotal(text){
+  if (!text) return 0;
+  let e = totalReg.exec(text)
+  if (e && e.length > 1){
+    return parseInt(e[1].trim().replace(/,/g, ""), 10) || 0
+  }
+  return 0
+}
 /*
 * 把text对应的字符串的转换为以太坊地址对应的交易历史
 *
@@ -37,6 +46,8 @@ function getAddrTxs(text) {
   const $ = parseHtml(text);
   if (!$) return null;
   let results = [];
+  let total = parseTotal($("#ContentPlaceHolder1_topPageDiv>p>span").text().trim())
+  logger.info( `total:${total}`)
   $('tbody>tr').each(function(_, elem) {
     let txHash = $('a.myFnExpandBox_searchVal[href^="/tx/"]', $(this)).text();
     if (!txHash) {
@@ -84,7 +95,10 @@ function getAddrTxs(text) {
     tx.fee = fee;
     results.push(tx);
   });
-  return results;
+  return {
+    total,
+    txs: results
+  };
 }
 
 const etherScanIoPageSize = 50;
@@ -96,6 +110,7 @@ function transferEtherScanIoPage(pageNo, pageSize){
 module.exports = {
   isValidEthAddr,
   getAddrTxs,
+  parseTotal,
   transferEtherScanIoPage
 };
 

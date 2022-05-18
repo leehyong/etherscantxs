@@ -13,15 +13,17 @@ describe('ValidEthAddr', function () {
   });
 });
 
-describe('Value Integer Part', function () {
+describe('parseTotal', function () {
   describe('test', function () {
     it('should return null when the text is not valid', function () {
-      let okV = "0<b>";
-      assert.equal(util.getValueIntPart(okV), "0");
-      okV = "320<b>";
-      assert.equal(util.getValueIntPart(okV), "320");
-      const errV = "faf22<b>";
-      assert.equal(util.getValueIntPart(errV), null);
+      let okV = " A total of 1,507 transactions found";
+      assert.equal(util.parseTotal(okV), 1507);
+      okV = " A total of 1,221,507 transactions found";
+      assert.equal(util.parseTotal(okV), 1221507);
+      let errV = "A total fasfa 1,221,507 eew found";
+      assert.equal(util.parseTotal(errV), 0);
+      errV = "A total fasfa 22 eew found";
+      assert.equal(util.parseTotal(errV), 0);
     });
   });
 });
