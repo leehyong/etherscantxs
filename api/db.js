@@ -15,7 +15,7 @@ const cachedAddr = new LRU({
 * Returns: CheerioAPI || null
 *  */
 
-function getAddrTx(addr, page, size) {
+function getAddrTxs(addr, page, size) {
   const cachedTxs = cachedAddr.get(addr);
   // logger.info("cachedTxs", cachedTxs);
   if (cachedTxs && cachedTxs.txs && cachedTxs.txs.length >= page * size) {
@@ -49,7 +49,7 @@ function getAddrTx(addr, page, size) {
 * }
 * Return: null;
 * */
-function insertAddrTx(addr, txs) {
+function insertAddrTxs(addr, txs) {
   // logger.info(txs instanceof (Array), typeof txs);
   if (!txs || !(txs.txs instanceof (Array))) return;
   let insertedTxs = {};
@@ -75,7 +75,7 @@ function insertAddrTx(addr, txs) {
 
 
 module.exports = {
-  insertAddrTx,
-  getAddrTx,
+  insertAddrTxs,
+  getAddrTxs,
 };
 

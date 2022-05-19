@@ -30,7 +30,7 @@ describe('parseTotal', function () {
 });
 
 
-describe('getAddrTxs', function () {
+describe('parseAddrTxs', function () {
   describe('test', function () {
     it('should return null when the text is not valid', function () {
       const history = `
@@ -79,7 +79,7 @@ describe('getAddrTxs', function () {
 </tr>
 </tbody>
       `;
-      let data = util.getAddrTxs(history)
+      let data = util.parseAddrTxs(history)
       assert.equal(data.txs.length, 1);
       assert.equal(data.total, 0);
       let tx = data.txs[0];
@@ -109,7 +109,7 @@ describe('transferEtherScanIoPage', function () {
   });
 });
 
-describe('db insertAddrTx & getAddrTx', function () {
+describe('db insertAddrTxs & parseAddrTxs', function () {
   describe('test', function () {
     it('should return null when the text is not valid', function () {
       let addr = "lee";
@@ -124,9 +124,9 @@ describe('db insertAddrTx & getAddrTx', function () {
         total,
         txs
       }
-      db.insertAddrTx(addr, data)
+      db.insertAddrTxs(addr, data)
       // 此时返回全部数据
-      let cache = db.getAddrTx(addr, 1, 3);
+      let cache = db.getAddrTxs(addr, 1, 3);
       assert.equal(cache.total, total);
       assert.equal(cache.txs.length, txs.length);
       assert.equal(cache.txs[0]._id, "123fasfa1");
@@ -134,26 +134,26 @@ describe('db insertAddrTx & getAddrTx', function () {
       assert.equal(cache.txs[2].blockNumber, 16);
 
       // 此时只返回2条数据
-      cache = db.getAddrTx(addr, 1, 2);
+      cache = db.getAddrTxs(addr, 1, 2);
       assert.equal(cache.total, total);
       assert.equal(cache.txs.length, 2);
       assert.equal(cache.txs[0]._id, "123fasfa1");
       assert.equal(cache.txs[1].from, addr);
 
       // 此时只返回一条数据
-      cache = db.getAddrTx(addr, 2, 1); // 请求第二页的数据
+      cache = db.getAddrTxs(addr, 2, 1); // 请求第二页的数据
       assert.equal(cache.total, total);
       assert.equal(cache.txs.length, 1);
       assert.equal(cache.txs[0]._id, "weqweq");
 
       // 此时只返回null,
-      cache = db.getAddrTx(addr, 1, 30); // 请求第二页的数据
+      cache = db.getAddrTxs(addr, 1, 30); // 请求第二页的数据
       assert.equal(cache, null);
       // 此时只返回null,
-      cache = db.getAddrTx(addr, 2, 2); // 请求第二页的数据
+      cache = db.getAddrTxs(addr, 2, 2); // 请求第二页的数据
       assert.equal(cache, null);
       // 此时只返回null,
-      cache = db.getAddrTx(addr, 2, 8); // 请求第二页的数据
+      cache = db.getAddrTxs(addr, 2, 8); // 请求第二页的数据
       assert.equal(cache, null);
 
     });

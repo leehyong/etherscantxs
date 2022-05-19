@@ -26,6 +26,13 @@ function parseHtml(html) {
 }
 
 const totalReg = /of\s*(.+)\s*transactions/
+/*
+* 解析记录总数
+*
+* Params:
+*  text: 字符串,满足 totalReg 的格式
+* Returns: number
+* */
 function parseTotal(text){
   if (!text) return 0;
   let e = totalReg.exec(text)
@@ -35,13 +42,13 @@ function parseTotal(text){
   return 0
 }
 /*
-* 把text对应的字符串的转换为以太坊地址对应的交易历史
+* 把text对应的字符串的解析为以太坊地址对应的交易历史
 *
 * Params:
 *  text: 字符串
 * Returns: Array
 * */
-function getAddrTxs(text) {
+function parseAddrTxs(text) {
   if (!text) return null;
   const $ = parseHtml(text);
   if (!$) return null;
@@ -113,7 +120,7 @@ function transferEtherScanIoPage(pageNo, pageSize){
 
 module.exports = {
   isValidEthAddr,
-  getAddrTxs,
+  parseAddrTxs,
   parseTotal,
   transferEtherScanIoPage,
   etherScanIoPageSize
