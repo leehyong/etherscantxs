@@ -1,5 +1,6 @@
 const assert = require('assert');
 const util = require("../util")
+const db = require("../db")
 
 
 describe('ValidEthAddr', function () {
@@ -104,6 +105,57 @@ describe('transferEtherScanIoPage', function () {
       assert.equal(util.transferEtherScanIoPage(3, 40), 3);
       assert.equal(util.transferEtherScanIoPage(4, 30), 3);
       assert.equal(util.transferEtherScanIoPage(6, 20), 3);
+    });
+  });
+});
+
+describe('db insertAddrTx & getAddrTx', function () {
+  describe('test', function () {
+    it('should return null when the text is not valid', function () {
+      let addr = "lee";
+      let to = "sen";
+      let total = 100;
+      let txs = [
+        {_id: "123fasfa1", from: addr, to: to, value: 23, fee: 1, blockNumber: 12},
+        {_id: "weqweq", from: addr, to: to, value: 13, fee: 2, blockNumber: 18},
+        {_id: "vfqweq", from: to, to: addr, value: 43, fee: 5, blockNumber: 16},
+      ];
+      let data = {
+        total,
+        txs
+      }
+      db.insertAddrTx(addr, data)
+      // 此时返回全部数据
+      let cache = db.getAddrTx(addr, 1, 3);
+      assert.equal(cache.total, total);
+      assert.equal(cache.txs.length, txs.length);
+      assert.equal(cache.txs[0]._id, "123fasfa1");
+      assert.equal(cache.txs[1].from, addr);
+      assert.equal(cache.txs[2].blockNumber, 16);
+
+      // 此时只返回2条数据
+      cache = db.getAddrTx(addr, 1, 2);
+      assert.equal(cache.total, total);
+      assert.equal(cache.txs.length, 2);
+      assert.equal(cache.txs[0]._id, "123fasfa1");
+      assert.equal(cache.txs[1].from, addr);
+
+      // 此时只返回一条数据
+      cache = db.getAddrTx(addr, 2, 1); // 请求第二页的数据
+      assert.equal(cache.total, total);
+      assert.equal(cache.txs.length, 1);
+      assert.equal(cache.txs[0]._id, "weqweq");
+
+      // 此时只返回null,
+      cache = db.getAddrTx(addr, 1, 30); // 请求第二页的数据
+      assert.equal(cache, null);
+      // 此时只返回null,
+      cache = db.getAddrTx(addr, 2, 2); // 请求第二页的数据
+      assert.equal(cache, null);
+      // 此时只返回null,
+      cache = db.getAddrTx(addr, 2, 8); // 请求第二页的数据
+      assert.equal(cache, null);
+
     });
   });
 });

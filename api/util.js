@@ -16,8 +16,8 @@ function isValidEthAddr(addr) {
 * 把html对应的字符串的转换为dom相关的对象
 *
 * Params:
-*  html: 字符串
-*  Returns: CheerioAPI
+*  html: 可以解析为DOM树的html字符串
+* Returns: CheerioAPI
 * */
 function parseHtml(html) {
   if (!html) return null;
@@ -39,7 +39,7 @@ function parseTotal(text){
 *
 * Params:
 *  text: 字符串
-*  Returns: Array
+* Returns: Array
 * */
 function getAddrTxs(text) {
   if (!text) return null;

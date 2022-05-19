@@ -2,9 +2,9 @@ const middleware = require('@blocklet/sdk/lib/middlewares');
 const router = require('express').Router();
 const util = require('../util')
 const logger = require('../libs/logger');
-const needle = require('needle')
+// const needle = require('needle')
+// const https = require('https')
 const db = require('../db')
-const https = require('https')
 const fs = require('fs')
 const path = require("path");
 
