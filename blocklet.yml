@@ -12,7 +12,7 @@ author:
   email: lxy1148545418@163.com
 repository:
   type: git
-  url: git+https://github.com/blocklet/create-blocklet.git
+  url: git+https://github.com/leehyong/etherscantxs.git
 specVersion: 1.1.1
 version: 0.1.0
 logo: logo.png
