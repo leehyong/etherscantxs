@@ -1,9 +1,14 @@
 <template>
-  <div>
-    <div style="display: flex; margin-bottom: 10px">
-      <a-input-search style="flex: 80px" v-model="addr" placeholder="请输入地址"></a-input-search>
-      <a-button style="flex: 80px" @click="getAddrTxs">查询</a-button>
-      <div style="flex: 1"></div>
+  <div style="padding: 0 10px">
+    <div style="margin-bottom: 10px">
+      <a-row type="flex">
+        <a-col :flex="'380px'">
+          <a-input-search v-model="addr" placeholder="请输入地址" @search="getAddrTxs"></a-input-search>
+        </a-col>
+        <a-col :flex="'80px'">
+          <a-button @click="getAddrTxs">查询</a-button>
+        </a-col>
+      </a-row>
     </div>
     <a-table
       ref="table"
