@@ -49,3 +49,5 @@ app.listen(port, (err) => {
   if (err) throw err;
   logger.info(`> ${name} v${version} ready on ${port}`);
 });
+
+module.exports = app
